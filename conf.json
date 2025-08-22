@@ -1,0 +1,14 @@
+{
+    "sites": {
+        "Private Gitea Website": {
+            "address": "http://13.208.114.65:3000/",
+            "logo": "images/gitea_logo.svg",
+            "description": "私家 Gitea 网站"
+        },
+        "Google": {
+            "address": "https://www.google.com",
+            "logo": "images/google_logo.jpeg",
+            "description": "Google - 独具​匠心，贴​心​实用"
+        }
+    }
+}
