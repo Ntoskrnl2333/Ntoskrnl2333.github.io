@@ -17,7 +17,7 @@
         },
         "下载监视": {
             "address": "http://13.208.215.92/",
-            "logo": "images/baidunetdisk_logo.png",
+            "logo": "images/baidunetdisk_logo.webp",
             "description": "百度网盘下载监视"
         }
     }
