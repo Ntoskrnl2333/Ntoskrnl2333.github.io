@@ -11,13 +11,13 @@
             "description": "Google - 独具​匠心，贴​心​实用"
         },
         "AWS 控制台主页（大阪）": {
-            "address": "https://ap-northeast-3.console.aws.amazon.com/console/home?region=ap-northeast-3#"
-            "logo": "images/aws_logo.png"
+            "address": "https://ap-northeast-3.console.aws.amazon.com/console/home?region=ap-northeast-3#",
+            "logo": "images/aws_logo.png",
             "description": "Amazon Web Service 控制台主页 | ap-northeast-3"
         },
         "下载监视": {
-            "address": "http://13.208.215.92/"
-            "logo": "images/baidunetdisk_logo.png"
+            "address": "http://13.208.215.92/",
+            "logo": "images/baidunetdisk_logo.png",
             "description": "百度网盘下载监视"
         }
     }
