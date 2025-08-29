@@ -4,125 +4,104 @@
   <meta charset="UTF-8">
   <title>Ntoskrnl2333 -- 个人主页</title>
   <link rel="icon" href="favicon.png" sizes="16x16">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      font-family: "Microsoft YaHei", sans-serif;
-      background-color: #000000;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: linear-gradient(135deg, #08298b, #6202ab);
+      background-color: #000;
       color: #fff;
-      padding: 40px 20px;
-      text-align: center;
+      font-family: "Microsoft YaHei", sans-serif;
+      font-size: 1.25rem; /* 调大基础字体 */
     }
-    header img.avatar {
+    .bg-gradient-custom {
+      background: linear-gradient(135deg, #08298b, #6202ab);
+    }
+    .avatar {
       width: 120px;
       height: 120px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 10px;
       border: 4px solid #fff;
+      margin-bottom: 10px;
     }
-    header h1 {
-      margin: 5px 0;
-    }
-    header p.bio {
-      color: #f0f0f0;
-      margin: 5px 0 10px 0;
-    }
-    p{
-      color: #ffffff
-    }
-    nav {
-      margin-top: 15px;
-    }
-    nav a {
-      margin: 0 12px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: bold;
-      transition: color 0.3s;
-    }
-    nav a:hover {
-      color: #ffd700;
-    }
-    section {
-      padding: 40px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-    h2 {
-      color: #ffffff;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 25px;
-    }
-    .card {
-      background: #fff;
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 11px 25px rgb(106, 1, 198);
+    .card-site {
+      transition: transform 0.3s, box-shadow 0.3s;
       cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      text-align: center;
+      padding: 5px;
       opacity: 0;
+      box-shadow: 0 11px 25px rgb(106, 1, 198);
       transform: translateY(30px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 20px;
+      font-size: 1.15rem;  /* 卡片字体更大 */
     }
-    .card.visible {
+    .card-site.visible {
       opacity: 1;
       transform: translateY(0);
-      transition: all 0.6s ease;
+      transition: all 0.6s;
     }
-    .card:hover {
+    .card-site:hover {
       transform: translateY(-8px) scale(1.02);
       box-shadow: 0 15px 40px rgba(24, 105, 255, 0.7);
     }
-    .card img {
-      max-width: 100%;
+    .card-site img {
       max-height: 100px;
       object-fit: contain;
-      margin: 0 auto 12px;
+      margin-bottom: 20px;
+      margin-top: 20px; /* logo和card之间增加边距 */
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
     }
-    .title {
-      font-size: 20px;
+    .nav-link {
+      color: #fff !important;
       font-weight: bold;
-      margin-bottom: 10px;
+      font-size: 1.1rem; /* 导航字体更大 */
     }
-    .desc {
-      font-size: 14px;
-      color: #666;
+    .nav-link:hover {
+      color: #ffd700 !important;
+    }
+    h1, h2, h5 {
+      font-size: 2.2rem; /* 标题字体更大 */
+      font-weight: bold;
+    }
+    h2 {
+      font-size: 1.8rem;
+    }
+    h5 {
+      font-size: 1.3rem;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-<header>
+<header class="bg-gradient-custom text-center py-5">
   <img src="favicon.png" alt="头像" class="avatar">
-  <h1>Ntoskrnl2333</h1>
-  <p class="bio">欢迎来到我的个人主页！</p>
-  <nav>
-    <a href="https://github.com/ntoskrnl2333/ntoskrnl2333.github.io">编辑本页</a>
-    <a href="#sites">快捷链接</a>
-    <a href="#contact">联系我</a>
+  <h1 class="mt-2 mb-1">Ntoskrnl2333</h1>
+  <p class="mb-3">欢迎来到我的个人主页！</p>
+  <nav class="mb-2">
+    <a class="nav-link d-inline" href="https://github.com/ntoskrnl2333/ntoskrnl2333.github.io">编辑本页</a>
+    <a class="nav-link d-inline" href="#sites">快捷链接</a>
+    <a class="nav-link d-inline" href="#contact">联系我</a>
   </nav>
 </header>
 
-<section id="sites">
-  <h2>快捷链接</h2>
-  <div class="grid" id="siteGrid"></div>
-</section>
+<main class="container my-5">
+  <section id="sites">
+    <h2 class="text-center mb-4">快捷链接</h2>
+    <div class="row" id="siteGrid"></div>
+  </section>
 
-<section id="contact">
-  <h2>联系我</h2>
+  <section id="contact" class="mt-5">
+    <h2 class="text-center mb-4">联系我</h2>
+    <!-- 可在此添加联系方式内容 -->
+  </section>
+</main>
 
-</section>
-
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   // 加载网站配置
   fetch("conf.json",{ cache: "reload" })
@@ -130,29 +109,38 @@
     .then(data => {
       const grid = document.getElementById("siteGrid");
       for (const [name, site] of Object.entries(data.sites)) {
+        const col = document.createElement("div");
+        col.className = "col-12 col-sm-6 col-md-4 col-lg-3 mb-4";
+
         const card = document.createElement("div");
-        card.className = "card";
+        card.className = "card card-site h-100 text-center";
         card.onclick = () => { window.location.href = site.address; };
 
         const img = document.createElement("img");
         img.src = site.logo;
+        img.className = "card-img-top mx-auto d-block";
+        img.alt = name;
         img.crossOrigin = "Anonymous";
-        img.onload = () => {
-          //TODO 图片加载成功后自动调整到统一尺寸
-        };
+        img.width = 60;
+        img.height = 60;
 
-        const title = document.createElement("div");
-        title.className = "title";
+        const cardBody = document.createElement("div");
+        cardBody.className = "card-body";
+
+        const title = document.createElement("h5");
+        title.className = "card-title";
         title.textContent = name;
 
-        const desc = document.createElement("div");
-        desc.className = "desc";
+        const desc = document.createElement("p");
+        desc.className = "card-text text-secondary";
         desc.textContent = site.description;
 
+        cardBody.appendChild(title);
+        cardBody.appendChild(desc);
         card.appendChild(img);
-        card.appendChild(title);
-        card.appendChild(desc);
-        grid.appendChild(card);
+        card.appendChild(cardBody);
+        col.appendChild(card);
+        grid.appendChild(col);
       }
       // 启动滚动动画
       initScrollAnimation();
@@ -163,7 +151,7 @@
 
   // 滚动动画函数
   function initScrollAnimation() {
-    const cards = document.querySelectorAll('.card');
+    const cards = document.querySelectorAll('.card-site');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
