@@ -3,7 +3,9 @@
         "Private Gitea Website": {
             "address": "http://13.208.114.65:3000/",
             "logo": "images/gitea_logo.svg",
-            "description": "私家 Gitea 网站"
+            "description": "私家 Gitea 网站",
+            "css": "background:radial-gradient(ellipse at top, #f9faf8, transparent),radial-gradient(#639b24);"
+            
         },
         "Google": {
             "address": "https://www.google.com",
