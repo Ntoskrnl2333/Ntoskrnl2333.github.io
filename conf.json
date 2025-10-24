@@ -10,43 +10,13 @@
         "Google": {
             "address": "https://www.google.com",
             "logo": "images/google_logo.svg",
-            "description": "Google - 独具​匠心，贴​心​实用"
+            "description": "Google - 独具​匠心，贴​心​实用",
+            "css": "background: conic-gradient(#4484f4, #eb4333, #fcbc04, #34aa54, #4484f4);"
         },
         "AWS 控制台主页（大阪）": {
             "address": "https://ap-northeast-3.console.aws.amazon.com/console/home?region=ap-northeast-3#",
             "logo": "images/aws_logo.png",
             "description": "Amazon Web Service 控制台主页 | ap-northeast-3"
-        },
-        "下载监视": {
-            "address": "http://56.155.105.143/",
-            "logo": "images/baidunetdisk_logo.webp",
-            "description": "百度网盘下载监视"
-        },
-        "下载监视114514111111": {
-            "address": "http://56.155.105.143/",
-            "logo": "images/baidunetdisk_logo.webp",
-            "description": "百度网盘下载监视"
-        },
-        "下载监视2": {
-            "address": "http://56.155.105.143/",
-            "logo": "images/baidunetdisk_logo.webp",
-            "description": "百度网盘下载监视"
-        },
-        "下载监视3": {
-            "address": "http://56.155.105.143/",
-            "logo": "images/baidunetdisk_logo.webp",
-            "description": "百度网盘下载监视"
-        },
-        "下载监视114514": {
-            "address": "http://56.155.105.143/",
-            "logo": "images/baidunetdisk_logo.webp",
-            "description": "百度网盘下载监视"
-        },
-        "下载监视5": {
-            "address": "http://56.155.105.143/",
-            "logo": "images/baidunetdisk_logo.webp",
-            "description": "百度网盘下载监视"
         }
-
     }
 }
