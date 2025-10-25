@@ -3,7 +3,7 @@ import json, os
 from urllib.parse import unquote
 
 COMMENTS_FILE = "comments.json"
-PORT = 3013
+PORT = 80
 
 class CommentHandler(BaseHTTPRequestHandler):
     def _send(self, status: int, body: str, content_type="text/plain; charset=utf-8"):
