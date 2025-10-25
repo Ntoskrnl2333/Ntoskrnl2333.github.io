@@ -1,87 +1,78 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import json
-import os
+import json, os
 from urllib.parse import unquote
 
 COMMENTS_FILE = "comments.json"
-PORT = 80
+PORT = 3013
 
 class CommentHandler(BaseHTTPRequestHandler):
+    def _send(self, status: int, body: str, content_type="text/plain; charset=utf-8"):
+        body_bytes = body.encode("utf-8") if isinstance(body, str) else body
+        self.send_response(status)
+        self.send_header("Content-Type", content_type)
+        self.send_header("Content-Length", str(len(body_bytes)))
+        self.end_headers()
+        self.wfile.write(body_bytes)
+        self.wfile.flush()
+
     def do_POST(self):
         if self.path != "/comment/push":
-            self.send_error(404, "Not Found")
+            self._send(404, "Not Found")
             return
 
-        length = int(self.headers.get('Content-Length', 0))
-        body = self.rfile.read(length)
         try:
+            length = int(self.headers.get('Content-Length', 0))
+            body = self.rfile.read(length)
             new_comment = json.loads(body)
-        except json.JSONDecodeError:
-            self.send_error(400, "Invalid JSON")
+        except Exception:
+            self._send(400, "Invalid JSON")
             return
 
-        # 读取原有数据
-        if os.path.exists(COMMENTS_FILE):
-            try:
+        # 读取/初始化文件
+        try:
+            if os.path.exists(COMMENTS_FILE):
                 with open(COMMENTS_FILE, "r", encoding="utf-8") as f:
                     comments = json.load(f)
                 if not isinstance(comments, list):
                     comments = []
-            except Exception:
+            else:
                 comments = []
-        else:
+        except Exception:
             comments = []
 
-        # 追加新评论
         comments.append(new_comment)
-
-        # 写回文件
         with open(COMMENTS_FILE, "w", encoding="utf-8") as f:
             json.dump(comments, f, ensure_ascii=False, indent=2)
 
-        # 返回成功
-        self.send_response(200)
-        self.send_header("Content-Type", "application/json; charset=utf-8")
-        self.end_headers()
-        self.wfile.write(json.dumps({"status": "ok"}).encode("utf-8"))
+        self._send(200, json.dumps({"status": "ok"}, ensure_ascii=False), "application/json; charset=utf-8")
 
     def do_GET(self):
         if self.path == "/comment/list":
+            data = "[]"
             if os.path.exists(COMMENTS_FILE):
                 with open(COMMENTS_FILE, "r", encoding="utf-8") as f:
                     data = f.read()
-            else:
-                data = "[]"
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json; charset=utf-8")
-            self.end_headers()
-            self.wfile.write(data.encode("utf-8"))
-        else:
-            # 静态文件处理
-            path = unquote(self.path.lstrip("/"))
-            if path == "":
-                path = "index.html"
-            if not os.path.exists(path) or not os.path.isfile(path):
-                self.send_error(404, "File not found")
-                return
-            # 根据扩展名设置简单的 MIME 类型
-            mime = "text/plain"
-            if path.endswith(".html"):
-                mime = "text/html; charset=utf-8"
-            elif path.endswith(".css"):
-                mime = "text/css; charset=utf-8"
-            elif path.endswith(".js"):
-                mime = "application/javascript; charset=utf-8"
-            elif path.endswith(".png"):
-                mime = "image/png"
-            elif path.endswith(".jpg") or path.endswith(".jpeg"):
-                mime = "image/jpeg"
+            self._send(200, data, "application/json; charset=utf-8")
+            return
 
-            self.send_response(200)
-            self.send_header("Content-Type", mime)
-            self.end_headers()
-            with open(path, "rb") as f:
-                self.wfile.write(f.read())
+        # 静态文件处理
+        path = unquote(self.path.lstrip("/")) or "index.html"
+        if not os.path.exists(path) or not os.path.isfile(path):
+            self._send(404, "File not found")
+            return
+
+        mime = {
+            ".html": "text/html; charset=utf-8",
+            ".css": "text/css; charset=utf-8",
+            ".js": "application/javascript; charset=utf-8",
+            ".png": "image/png",
+            ".jpg": "image/jpeg",
+            ".jpeg": "image/jpeg",
+        }.get(os.path.splitext(path)[1].lower(), "application/octet-stream")
+
+        with open(path, "rb") as f:
+            data = f.read()
+        self._send(200, data, mime)
 
 if __name__ == "__main__":
     server = HTTPServer(("0.0.0.0", PORT), CommentHandler)
