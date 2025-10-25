@@ -11,40 +11,41 @@ class CommentHandler(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(body_bytes)))
+        self.send_header("Connection", "close")
         self.end_headers()
         self.wfile.write(body_bytes)
         self.wfile.flush()
+        self.close_connection = True
 
     def do_POST(self):
-        if self.path != "/comment/push":
-            self._send(404, "Not Found")
-            return
+        if self.path == "/comment/push":
+            try:
+                length = int(self.headers.get('Content-Length', 0))
+                body = self.rfile.read(length)
+                new_comment = json.loads(body)
+            except Exception:
+                self._send(400, "Invalid JSON")
+                return
 
-        try:
-            length = int(self.headers.get('Content-Length', 0))
-            body = self.rfile.read(length)
-            new_comment = json.loads(body)
-        except Exception:
-            self._send(400, "Invalid JSON")
-            return
-
-        # 读取/初始化文件
-        try:
-            if os.path.exists(COMMENTS_FILE):
-                with open(COMMENTS_FILE, "r", encoding="utf-8") as f:
-                    comments = json.load(f)
-                if not isinstance(comments, list):
+            # 读取/初始化文件
+            try:
+                if os.path.exists(COMMENTS_FILE):
+                    with open(COMMENTS_FILE, "r", encoding="utf-8") as f:
+                        comments = json.load(f)
+                    if not isinstance(comments, list):
+                        comments = []
+                else:
                     comments = []
-            else:
+            except Exception:
                 comments = []
-        except Exception:
-            comments = []
 
-        comments.append(new_comment)
-        with open(COMMENTS_FILE, "w", encoding="utf-8") as f:
-            json.dump(comments, f, ensure_ascii=False, indent=2)
+            comments.append(new_comment)
+            with open(COMMENTS_FILE, "w", encoding="utf-8") as f:
+                json.dump(comments, f, ensure_ascii=False, indent=2)
 
-        self._send(200, json.dumps({"status": "ok"}, ensure_ascii=False), "application/json; charset=utf-8")
+            self._send(200, json.dumps({"status": "ok"}, ensure_ascii=False), "application/json; charset=utf-8")
+        else:
+            self._send(404, "Not Found")
 
     def do_GET(self):
         if self.path == "/comment/list":
