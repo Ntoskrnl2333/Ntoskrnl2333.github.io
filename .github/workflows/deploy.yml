@@ -1,0 +1,28 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send GET request for deploying
+        id: request
+        run: |
+          RESPONSE=$(curl -s -w "%{http_code}" http://ntoskrnl2333.cn:3013)
+          BODY=${RESPONSE::-3}
+          STATUS=${RESPONSE: -3}
+          echo "$BODY" > response.txt
+          echo "STATUS=$STATUS" >> $GITHUB_ENV
+          if [ "$STATUS" != "200" ]; then
+            echo "Status: $STATUS"
+            exit 1
+          fi
+
+      - name: Upload response as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: response
+          path: response.txt
