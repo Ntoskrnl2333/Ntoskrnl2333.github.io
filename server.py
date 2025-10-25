@@ -4,7 +4,7 @@ import os
 from urllib.parse import unquote
 
 COMMENTS_FILE = "comments.json"
-PORT = 3013
+PORT = 80
 
 class CommentHandler(BaseHTTPRequestHandler):
     def do_POST(self):
